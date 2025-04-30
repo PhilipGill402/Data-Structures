@@ -1,15 +1,20 @@
 class Stack:
     def __init__(self):
         self.elements = []
-        self.top = None
+        self.top = 0 
 
     def push(self, value: int):
+        self.elements.append(value)
         self.top += 1
-        self.elements[self.top] = value
+        
 
     def pop(self):
-        self.elements.pop()
-        self.top -= 1
+        if not self.isEmpty():
+            topValue = self.elements.pop()
+            self.top -= 1
+            return topValue
+        else:
+            return -1
 
     def peek(self):
         if self.isEmpty():

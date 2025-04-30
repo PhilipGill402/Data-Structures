@@ -1,10 +1,11 @@
 from LinkedList import *
+from Stack import *
 
-arr = LinkedList()
+arr = Stack() 
 
-arr.add(10)
-arr.add(20)
-arr.add(30)
+arr.push(10)
+arr.push(20)
 
-for i in arr:
-    print(i)
+print(arr.pop())
+print(arr.pop())
+print(arr.pop())

@@ -1,11 +1,14 @@
 from LinkedList import *
 from Stack import *
+from Queue import *
 
-arr = Stack() 
+arr = Queue() 
 
-arr.push(10)
-arr.push(20)
+for i in range(10):
+    arr.enqueue(i)
 
-print(arr.pop())
-print(arr.pop())
-print(arr.pop())
+for i in range(5):
+    print(arr.dequeue())
+
+print("\n")
+print(arr.first())

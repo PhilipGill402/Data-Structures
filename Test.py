@@ -1,14 +1,12 @@
 from LinkedList import *
 from Stack import *
 from Queue import *
+from BinarySearchTree import *
 
-arr = Queue() 
+arr = BinarySearchTree(1) 
 
-for i in range(10):
-    arr.enqueue(i)
+arr.add(10)
+arr.add(20)
+arr.add(30)
 
-for i in range(5):
-    print(arr.dequeue())
-
-print("\n")
-print(arr.first())
+print(arr.height())

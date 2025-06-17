@@ -1,5 +1,3 @@
-#TODO: add inorder, postorder, and preorder walks
-
 class BinarySearchTree:
     def __init__(self, root):
         self.root = self.BTN(root)

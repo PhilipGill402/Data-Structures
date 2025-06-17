@@ -1,3 +1,5 @@
+#TODO: add inorder, postorder, and preorder walks
+
 class BinarySearchTree:
     def __init__(self, root):
         self.root = self.BTN(root)
@@ -11,7 +13,7 @@ class BinarySearchTree:
     def height(self, node=-1):
         if node == -1:
             node = self.root
-        if node == None:
+        if node is None:
             return 0
 
         leftHeight = self.height(node.left)
@@ -21,14 +23,14 @@ class BinarySearchTree:
     def add(self, element):
         current = self.root
 
-        while current != None:
+        while current is not None:
             if element < current.element:
-                if (current.left == None):
+                if (current.left is None):
                     current.left = self.BTN(element)
                     break
                 current = current.left
             elif element > current.element:
-                if (current.right == None):
+                if (current.right is None):
                     current.right = self.BTN(element)
                     break
                 current = current.right
@@ -46,31 +48,41 @@ class BinarySearchTree:
             prev = current
             if element < current.element:
                 #element not found
-                if current.left == None:
+                if current.left is None:
                     return -1
                 current = current.left
             elif element > current.element:
                 #element not found
-                if current.right == None:
+                if current.right is None:
                     return -1
                 current = current.right
 
         #case 1 - leaf node
-        if current.left == None and current.right == None:
-            if prev.left == current:
+        if current.left is None and current.right is None:
+            #node to be deleted is the root
+            if prev is None:
+                self.root = None
+            elif prev.left == current:
                 prev.left = None
             else:
                 prev.right = None
 
         #case 2 - single child
         elif (current.left is None) ^ (current.right is None):
-            if current.left != None and prev.right == current:
+            #node to be deleted is the root
+            if prev is None:
+                if self.root.left is not None:
+                    self.root = self.root.left
+                else:
+                    self.root = self.root.right
+                
+            elif current.left is not None and prev.right == current:
                 prev.right = current.left
             
-            elif current.right != None and prev.right == current:
+            elif current.right is not None and prev.right == current:
                 prev.right = current.right
 
-            elif current.left != None and prev.left == current:
+            elif current.left is not None and prev.left == current:
                 prev.left = current.left
 
             else:
@@ -79,17 +91,40 @@ class BinarySearchTree:
         #case 3 - two children
         else:
             #find inorder successor
-            successor = current
-            while successor is not None:
-                if successor.element == current.element:
-                    successor = successor.right
-                else:
-                    if successor.left is None:
-                        break
-                    successor = successor.left
+            successor_parent = current
+            successor = current.right
+            while successor.left is not None:
+                successor_parent = successor
+                successor = successor.left
             
-            self.remove(successor.element)
             current.element = successor.element
+            #if successor is current.right then we just remove successor from the tree
+            if successor_parent = current:
+                successor_parent.right = successor.right
+            #if successor has a right subtree then it is added to its parents left subtree replacing successor
+            else:
+                successor_parent.left = successor.right
 
                 
         return 1
+
+    def inorder(self, node):
+        if node is None:
+            return
+        self.inorder(node.left)
+        print(node.element)
+        self.inorder(node.right)
+
+    def postorder(self, node):
+        if node is None:
+            return
+        self.postorder(node.left)
+        self.postorder(node.right)
+        print(node.element)
+
+    def preorder(self, node):
+        if node is None:
+            return
+        print(node.element)
+        self.preorder(node.left)
+        self.preorder(node.right)

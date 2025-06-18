@@ -1,12 +1,16 @@
 from __future__ import annotations
+from typing import TypeVar, Generic
 
-class Set:
+T = TypeVar('T')
+
+class Set(Generic[T]):
     def __init__(self):
         self.__size = 0
         self.__index = 0
-        self.__elements = []
+        self.__elements: list[T] = []
 
     def __iter__(self):
+        self.__index = 0
         return self
 
     def __next__(self):
@@ -30,7 +34,7 @@ class Set:
         string += ")"
         return string
 
-    def add(self, element):
+    def add(self, element: T) -> int:
         newElements = self.__elements.copy() + [None]
         #find insertion point
         idx = 0
@@ -62,7 +66,7 @@ class Set:
         self.__size += 1
         return 1
 
-    def remove(self, element):
+    def remove(self, element: T) -> int:
         #find element
         for i in range(len(self.__elements)):
             if self.__elements[i] == element:
@@ -86,7 +90,7 @@ class Set:
 
         return 1
 
-    def contains(self, element, left=0, right=None):
+    def contains(self, element: T, left=0, right=None) -> int:
         if right is None:
             right = len(self.__elements)
         middle = (left + right) // 2
